@@ -87,41 +87,103 @@ public class StockController {
                 }
             }
         }
-        if(stockCount == stockSize) {
+        if (stockCount == stockSize) {
             System.out.println("Invalid Selection");
             System.out.println("Returning to the main menu");
         }
     }
 
 
-        public void deleteProcess() {
+    public void deleteProcess() {
 
         int stockCount = 0;
 
-            System.out.println("Are you sure that you want to remove item?");
-            System.out.println(" 1 - Yes");
-            System.out.println(" 2 - No");
+        System.out.println("Are you sure that you want to remove item?");
+        System.out.println(" 1 - Yes");
+        System.out.println(" 2 - No");
 
-            int userConfirm = Integer.parseInt(scn.nextLine());
+        int userConfirm = Integer.parseInt(scn.nextLine());
 
-            switch (userConfirm) {
-                case 1: {
-                    for (StockModel item : stock) {
-                        stock.removeIf(StockModel -> StockModel.productID == deleteInput);
-                        System.out.println("Item has been successfully deleted");
-                        break;
-                    }
-                }
-                case 2: {
-                    System.out.println("Returning you to the main menu");
+        switch (userConfirm) {
+            case 1: {
+                for (StockModel item : stock) {
+                    stock.removeIf(StockModel -> StockModel.productID == deleteInput);
+                    System.out.println("Item has been successfully deleted");
                     break;
                 }
+                break;
             }
-
-
+            case 2: {
+                System.out.println("Returning you to the main menu");
+                break;
+            }
         }
 
 
+    }
+
+
+    int editInput;
+
+    public void editRecords() {
+        System.out.println("Please enter the product ID of the item you would like to edit");
+        editInput = Integer.parseInt(scn.nextLine());
+
+            for (StockModel item : stock) {
+                if (editInput == item.productID) {
+                    System.out.println("You have selected item: " + item.getTitle());
+                    editProcess();
+                    break;
+                }
+            }
+    }
+
+    public void editProcess() {
+
+        System.out.println("What would you like to edit?");
+        System.out.println("1 - Price");
+        System.out.println("2 - Number in stock");
+        System.out.println("3 - Exit to Main menu");
+        int selection = Integer.parseInt(scn.nextLine());
+
+        switch (selection) {
+
+            case 1: {
+                System.out.println("What would you like to change it to?");
+                double newPrice = Double.parseDouble(scn.nextLine());
+                System.out.println("You have entered: £" + String.format("%.2f", newPrice));
+                for (StockModel item : stock) {
+                    if (item.productID == editInput) {
+                        item.price = newPrice;
+                        System.out.println("Hold on a moment...");
+                        System.out.println("Price updated, returning to Main Menu");
+                    }
+                }
+                break;
+            }
+
+            case 2: {
+                System.out.println("What would you like to change it to?");
+                int newStock = Integer.parseInt(scn.nextLine());
+                System.out.println("You have entered: " + newStock);
+                for (StockModel item : stock) {
+                    if (item.productID == editInput) {
+                        item.numberInStock = newStock;
+                        System.out.println("Stock updated, returning to Main Menu");
+                        break;
+                    }
+                }
+                break;
+            }
+            case 3: {break;}
+
+        }
+    }
 }
+
+
+
+
+
 
 

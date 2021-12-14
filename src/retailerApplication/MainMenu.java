@@ -55,7 +55,9 @@ public class MainMenu{
                     break;
 
                 case 3:
-                    //stockControl.editRecord();
+                    stockControl.editRecords();
+                    mainMenu();
+                    break;
 
                 case 4:
                     stockControl.deleteRecord();
