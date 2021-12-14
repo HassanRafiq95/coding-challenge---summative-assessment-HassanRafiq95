@@ -149,6 +149,12 @@ public class StockController {
         switch (selection) {
 
             case 1: {
+                for(StockModel item : stock) {
+                    if(item.productID == editInput) {
+                        System.out.println("The current price is: £" +String.format("%.2f", item.price));
+                    }
+                }
+
                 System.out.println("What would you like to change it to?");
                 double newPrice = Double.parseDouble(scn.nextLine());
                 System.out.println("You have entered: £" + String.format("%.2f", newPrice));
@@ -163,6 +169,12 @@ public class StockController {
             }
 
             case 2: {
+                for(StockModel item : stock) {
+                    if(item.productID == editInput) {
+                        System.out.println("The current stock number is: " + item.numberInStock);
+                    }
+                }
+
                 System.out.println("What would you like to change it to?");
                 int newStock = Integer.parseInt(scn.nextLine());
                 System.out.println("You have entered: " + newStock);
