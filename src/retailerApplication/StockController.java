@@ -5,23 +5,11 @@ import java.util.Scanner;
 
 public class StockController {
 
-    public static void main(String[] args) {
-        StockController viewStock = new StockController();
-        viewStock.addItems();
-        viewStock.startUp();
-    }
-
     // Creating Scanner class
     Scanner scn = new Scanner((System.in));
 
     // Create empty Array to hold stock
     ArrayList<StockModel> stock = new ArrayList<>();
-
-    //Initialise Stock
-    public void initialiseStock() {
-        addItems();
-    }
-
 
     // Add items to the stock array list
     public void addItems() {
@@ -40,37 +28,101 @@ public class StockController {
 
     }
 
-
     public void viewStockMethod() {
         System.out.println("The current items in our stock list are:");
         System.out.println("----------------------------------------");
-            for(StockModel i : stock) {
-                System.out.println("Title: " + i.title + ", Price: £" + String.format("%.2f", i.price) +
-                        ", Developer: " + i.developer + ", Product ID: " + i.productID + ", No in Stock: " + i.numberInStock);
-                System.out.println("---------------------------------------------------------------------------------------");
-            }
-    }
-
-    public void startUp() {
-        System.out.println("Retro Games R US");
-        System.out.println("----------------");
-        System.out.println("Welcome to the Menu");
-        System.out.println("What would you like to do?");
-        System.out.println("---------------------------");
-        System.out.println("1 - View Stock Items");
-        System.out.println("2 - Exit the application");
-        int userInput = Integer.parseInt(scn.nextLine());
-
-        switch (userInput) {
-                case 1: {
-                    viewStockMethod();
-                    break;
-                }
-
-                case 2:
-                    break;
-
+        for (StockModel i : stock) {
+            System.out.println("Title: " + i.title + ", Price: £" + String.format("%.2f", i.price) +
+                    ", Developer: " + i.developer + ", Product ID: " + i.productID + ", No in Stock: " + i.numberInStock);
+            System.out.println("---------------------------------------------------------------------------------------");
         }
     }
 
+    public void createRecord() {
+
+        String inputtitle;
+        double inputprice;
+        String inputdeveloper;
+        int inputproductID;
+        int inputnoInStock;
+
+        System.out.println("Add a new item to the stock list");
+        System.out.println("Please enter the following when prompted: ");
+        System.out.println("Title: ");
+        inputtitle = scn.nextLine();
+        System.out.println("Price: ");
+        inputprice = Double.parseDouble(scn.nextLine());
+        System.out.println("Developer: ");
+        inputdeveloper = scn.nextLine();
+        System.out.println("Unique Product code: ");
+        // Need to run a check if this is in current stock list
+        inputproductID = Integer.parseInt(scn.nextLine());
+        System.out.println("Number in stock: ");
+        inputnoInStock = Integer.parseInt(scn.nextLine());
+
+        // Adds new entry into Stock Array List
+        stock.add(new StockModel(inputtitle, inputprice, inputdeveloper, inputproductID, inputnoInStock));
+        System.out.println("Item has been successfully added");
+
+    }
+
+    int deleteInput;
+
+    public void deleteRecord() {
+
+        System.out.println("Please enter the product ID of the Item you will like to delete");
+        deleteInput = Integer.parseInt(scn.nextLine());
+
+        int stockCount = 0;
+        int stockSize = stock.size();
+
+        while (stockCount < stockSize) {
+            for (StockModel item : stock) {
+                if (deleteInput == item.productID) {
+                    System.out.println("You have selected item: " + item.getTitle());
+                    deleteProcess();
+                    break;
+                } else {
+                    stockCount++;
+                }
+            }
+            if(stockCount == stockSize) {
+                System.out.println("Invalid Selection");
+                System.out.println("Returning to the main menu");
+                break;
+
+            }
+        }
+    }
+
+
+        public void deleteProcess() {
+
+
+            System.out.println("Are you sure that you want to remove item?");
+            System.out.println(" 1 - Yes");
+            System.out.println(" 2 - No");
+
+            int userConfirm = Integer.parseInt(scn.nextLine());
+
+            switch (userConfirm) {
+                case 1: {
+                    for (StockModel item : stock) {
+                        stock.removeIf(StockModel -> StockModel.productID == deleteInput);
+                        System.out.println("Item has been successfully deleted");
+                        break;
+                    }
+                }
+                case 2: {
+                    System.out.println("Returning you to the main menu");
+                    break;
+                }
+            }
+
+
+        }
+
+
 }
+
+
