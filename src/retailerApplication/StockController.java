@@ -86,18 +86,17 @@ public class StockController {
                     stockCount++;
                 }
             }
-            if(stockCount == stockSize) {
-                System.out.println("Invalid Selection");
-                System.out.println("Returning to the main menu");
-                break;
-
-            }
+        }
+        if(stockCount == stockSize) {
+            System.out.println("Invalid Selection");
+            System.out.println("Returning to the main menu");
         }
     }
 
 
         public void deleteProcess() {
 
+        int stockCount = 0;
 
             System.out.println("Are you sure that you want to remove item?");
             System.out.println(" 1 - Yes");
