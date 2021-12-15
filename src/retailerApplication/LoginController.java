@@ -42,17 +42,17 @@ public class LoginController {
     }
 
 
-    int userID;
+
     public void loginCheck() {
         for (UserModel user : userArray) {
             if (user.username.equalsIgnoreCase(enterUsername) && user.password.equals(enterPassword)) {
                 System.out.println("Details confirmed, re-directing to main menu");
-                userID = user.employeeID;
                 goToMenu();
+                break;
             }
         }
-        System.out.println("Incorrect details, please try again");
-        loginView();
+        //System.out.println("Incorrect details, please try again");
+        //loginView();
     }
 
     public void goToMenu() {
@@ -61,5 +61,59 @@ public class LoginController {
         mainMenu.mainMenu();
     }
 
+    public void AccountSettings() {
 
-}
+        System.out.println("Welcome to account settings");
+        System.out.println("What would you like to do?");
+        System.out.println("1 - Change Password");
+        System.out.println("2 - Return to the Main Menu");
+        int userChoice = Integer.parseInt(scn.nextLine());
+
+        switch(userChoice) {
+
+            case 1: {
+                addUsers();
+                //System.out.println("1 - change your password");
+                //System.out.println("2 - go back to the manin menu");
+                System.out.println("You are about to change your password...");
+                System.out.println("Please enter your employee username");
+                String inputUsername = scn.nextLine();
+                System.out.println("Please enter your current password");
+                String inputPassword = scn.nextLine();
+
+                int userCount = 0;
+                int userArrauSize = userArray.size();
+                while(userCount != userArrauSize) {
+                    for(UserModel user : userArray) {
+                        if (user.username.equalsIgnoreCase(inputUsername) && user.password.equals(inputPassword)) {
+                            System.out.println("What would you like to change it to?");
+                            String newPassword = scn.nextLine();
+                            user.password = newPassword;
+                            System.out.println("Your password has been successfully updated");
+                            System.out.println("Logging you out, please login with new details");
+                            loginView();
+                            break;
+                        }
+                        else {
+                            userCount++;
+                        }
+                    }
+                    System.out.println("No matching details found, returning to the main menu");
+                    goToMenu();
+                }
+                break;
+            }
+
+            case 2: {
+                goToMenu();
+                break;
+            }
+
+        }
+
+
+
+
+        }
+
+    }

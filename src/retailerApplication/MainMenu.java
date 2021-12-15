@@ -28,6 +28,10 @@ public class MainMenu{
     // Create instance of Stock Controller that will be used in programme
     StockController stockControl = new StockController();
 
+    // Create instance of login controller
+    LoginController logincontrol = new LoginController();
+
+
     public void startup() {
         //Initialise stock during start up
         stockControl.addItems();
@@ -93,7 +97,7 @@ public class MainMenu{
                 }
 
                 case 7: {
-                    //account settings
+                    logincontrol.AccountSettings();
                     break;
 
                 }
