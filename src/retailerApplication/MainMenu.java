@@ -20,6 +20,7 @@ public class MainMenu{
     public void startup() {
         //Initialise stock during start up
         stockControl.addItems();
+        stockControl.createFile();
     }
 
 
@@ -38,6 +39,8 @@ public class MainMenu{
             System.out.println("2 - Add a new Stock item");
             System.out.println("3 - Edit an existing item");
             System.out.println("4 - Remove an item");
+            System.out.println("5 - Save Changes");
+            System.out.println("6 - Exit the application");
 
             // Get User Input
             int userInput = Integer.parseInt(scn.nextLine());
@@ -62,6 +65,15 @@ public class MainMenu{
                 case 4:
                     stockControl.deleteRecord();
                     mainMenu();
+                    break;
+
+                case 5: stockControl.saveChanges();
+                    System.out.println("Save successful");
+                mainMenu();
+                break;
+
+                case 6:
+                    System.out.println("Exiting application");
                     break;
 
 

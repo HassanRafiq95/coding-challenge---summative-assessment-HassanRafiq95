@@ -11,6 +11,17 @@ public class StockController {
     // Create empty Array to hold stock
     ArrayList<StockModel> stock = new ArrayList<>();
 
+    Initialise init = new Initialise();
+
+    public void createFile() {
+        init.createFileIfNotExist();
+        stock = init.getProducts(init.readFile(Initialise.productsFile));
+    }
+
+    public void saveChanges() {
+        init.writeData(stock);
+    }
+
     // Add items to the stock array list
     public void addItems() {
 
