@@ -15,12 +15,29 @@ public class StockController {
 
     public void createFile() {
         init.createFileIfNotExist();
+        init.writeData(stock);
         stock = init.getProducts(init.readFile(Initialise.productsFile));
     }
 
     public void saveChanges() {
         init.writeData(stock);
     }
+
+    public void checkStock(){
+        stock = stock = init.getProducts(init.readFile(Initialise.productsFile));
+        int stockSize = stock.size();
+        if (stockSize == 0) {
+            addItems();
+            saveChanges();
+        }
+    }
+
+    public ArrayList<StockModel> stockArray() {
+        stock = stock = init.getProducts(init.readFile(Initialise.productsFile));
+        return stock;
+    }
+
+
 
     // Add items to the stock array list
     public void addItems() {
@@ -40,6 +57,8 @@ public class StockController {
     }
 
     public void viewStockMethod() {
+        stockArray();
+
         System.out.println("The current items in our stock list are:");
         System.out.println("----------------------------------------");
         for (StockModel i : stock) {
@@ -50,6 +69,7 @@ public class StockController {
     }
 
     public void createRecord() {
+        stockArray();
 
         String inputtitle;
         double inputprice;
@@ -73,6 +93,7 @@ public class StockController {
 
         // Adds new entry into Stock Array List
         stock.add(new StockModel(inputtitle, inputprice, inputdeveloper, inputproductID, inputnoInStock));
+        saveChanges();
         System.out.println("Item has been successfully added");
 
     }
@@ -80,6 +101,7 @@ public class StockController {
     int deleteInput;
 
     public void deleteRecord() {
+        stockArray();
 
         System.out.println("Please enter the product ID of the Item you will like to delete");
         deleteInput = Integer.parseInt(scn.nextLine());
@@ -106,6 +128,7 @@ public class StockController {
 
 
     public void deleteProcess() {
+        stockArray();
 
         int stockCount = 0;
 
@@ -119,6 +142,7 @@ public class StockController {
             case 1: {
                 for (StockModel item : stock) {
                     stock.removeIf(StockModel -> StockModel.productID == deleteInput);
+                    saveChanges();
                     System.out.println("Item has been successfully deleted");
                     break;
                 }
@@ -137,6 +161,7 @@ public class StockController {
     int editInput;
 
     public void editRecords() {
+        stockArray();
         System.out.println("Please enter the product ID of the item you would like to edit");
         editInput = Integer.parseInt(scn.nextLine());
 
@@ -150,6 +175,7 @@ public class StockController {
     }
 
     public void editProcess() {
+        stockArray();
 
         System.out.println("What would you like to edit?");
         System.out.println("1 - Price");
@@ -174,6 +200,7 @@ public class StockController {
                         item.price = newPrice;
                         System.out.println("Hold on a moment...");
                         System.out.println("Price updated, returning to Main Menu");
+                        saveChanges();
                     }
                 }
                 break;
@@ -193,6 +220,7 @@ public class StockController {
                     if (item.productID == editInput) {
                         item.numberInStock = newStock;
                         System.out.println("Stock updated, returning to Main Menu");
+                        saveChanges();
                         break;
                     }
                 }

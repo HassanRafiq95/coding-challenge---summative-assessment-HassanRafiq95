@@ -6,16 +6,53 @@ import java.util.Scanner;
 public class LoginController {
 
     public static void main(String[] args) {
-        LoginController logincontrol = new LoginController();
-        logincontrol.addUsers();
-        logincontrol.loginView();
+        StockController stock = new StockController();
+        LoginController login = new LoginController();
+        login.checkUserArray();
+        stock.checkStock();
+        login.getData();
+
     }
 
 
     Scanner scn = new Scanner(System.in);
 
+    InitialiseUsers initialUsers = new InitialiseUsers();
     // Creating user array
     ArrayList<UserModel> userArray = new ArrayList<>();
+    private boolean exit = false;
+
+    public void getData() {
+        userArray = initialUsers.getUsers(initialUsers.readFile(InitialiseUsers.usersFile));
+        while(!exit)
+            loginView();
+    }
+
+    public void checkUserArray(){
+        userArray = initialUsers.getUsers(initialUsers.readFile(InitialiseUsers.usersFile));
+        int userArraySize = userArray.size();
+        if (userArraySize == 0) {
+            addUsers();
+            saveUserChanges();
+            getData();
+        }
+    }
+
+//    public void createUserFile() {
+//        initialUsers.createFileIfNotExist();
+//        initialUsers.writeData(userArray);
+//
+//    }
+
+    public ArrayList<UserModel> getUserArray() {
+        userArray = initialUsers.getUsers(initialUsers.readFile(InitialiseUsers.usersFile));
+        return userArray;
+    }
+
+    public void saveUserChanges() {
+        initialUsers.writeData(userArray);
+    }
+
 
     String enterUsername;
     String enterPassword;
@@ -27,7 +64,7 @@ public class LoginController {
         userArray.add(new UserModel("Beta", "Rona", 1002, "beta.rona@corona.com", "password2", false));
         userArray.add(new UserModel("Delta", "Rona", 1003, "delta.rona@corona.com", "password3", false));
         userArray.add(new UserModel("Omicron", "Rona", 1004, "omicron.rona@corona.com", "password4", true));
-        userArray.add(new UserModel("Omicron", "Rona", 1004, "aa", "aa", true));
+        userArray.add(new UserModel("Omicron", "Rona", 1005, "aa", "aa", true));
 
     }
 
@@ -41,9 +78,8 @@ public class LoginController {
         loginCheck();
     }
 
-
-
     public void loginCheck() {
+        getUserArray();
         for (UserModel user : userArray) {
             if (user.username.equalsIgnoreCase(enterUsername) && user.password.equals(enterPassword)) {
                 System.out.println("Details confirmed, re-directing to main menu");
@@ -51,17 +87,16 @@ public class LoginController {
                 break;
             }
         }
-        //System.out.println("Incorrect details, please try again");
-        //loginView();
     }
 
     public void goToMenu() {
         MainMenu mainMenu = new MainMenu();
-        mainMenu.startup();
+        //mainMenu.startup();
         mainMenu.mainMenu();
     }
 
     public void AccountSettings() {
+        getUserArray();
 
         System.out.println("Welcome to account settings");
         System.out.println("What would you like to do?");
@@ -69,10 +104,9 @@ public class LoginController {
         System.out.println("2 - Return to the Main Menu");
         int userChoice = Integer.parseInt(scn.nextLine());
 
-        switch(userChoice) {
+        switch (userChoice) {
 
             case 1: {
-                addUsers();
                 //System.out.println("1 - change your password");
                 //System.out.println("2 - go back to the manin menu");
                 System.out.println("You are about to change your password...");
@@ -81,25 +115,18 @@ public class LoginController {
                 System.out.println("Please enter your current password");
                 String inputPassword = scn.nextLine();
 
-                int userCount = 0;
-                int userArrauSize = userArray.size();
-                while(userCount != userArrauSize) {
-                    for(UserModel user : userArray) {
-                        if (user.username.equalsIgnoreCase(inputUsername) && user.password.equals(inputPassword)) {
-                            System.out.println("What would you like to change it to?");
-                            String newPassword = scn.nextLine();
-                            user.password = newPassword;
-                            System.out.println("Your password has been successfully updated");
-                            System.out.println("Logging you out, please login with new details");
-                            loginView();
-                            break;
-                        }
-                        else {
-                            userCount++;
-                        }
+                for (UserModel user : userArray) {
+                    if (user.username.equalsIgnoreCase(inputUsername) && user.password.equals(inputPassword)) {
+                        System.out.println("What would you like to change it to?");
+                        String newPassword = scn.nextLine();
+                        user.password = newPassword;
+                        System.out.println("Your password has been successfully updated");
+                        saveUserChanges();
+                        System.out.println("Logging you out, please login with new details");
+                        loginView();
+                        break;
                     }
-                    System.out.println("No matching details found, returning to the main menu");
-                    goToMenu();
+                    continue;
                 }
                 break;
             }
@@ -108,12 +135,7 @@ public class LoginController {
                 goToMenu();
                 break;
             }
-
-        }
-
-
-
-
         }
 
     }
+}
