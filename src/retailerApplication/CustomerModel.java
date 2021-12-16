@@ -6,7 +6,37 @@ import java.util.ArrayList;
 
 public class CustomerModel {
 
+    // Create empty array to hold customers
     ArrayList<CustomerModel> customerArray = new ArrayList<>();
+
+    //Initialise customers
+    InitialiseCustomers customerInit = new InitialiseCustomers();
+
+    public void createFile() {
+        customerInit.createFileIfNotExist();
+        customerInit.writeData(customerArray);
+        customerArray = customerInit.getCustomers(customerInit.readFile(InitialiseCustomers.customersFile));
+    }
+
+    public void saveChanges() {
+        customerInit.writeData(customerArray);
+    }
+
+    public void checkCustomers(){
+        customerArray = customerInit.getCustomers(customerInit.readFile(InitialiseCustomers.customersFile));
+        int customerSize = customerArray.size();
+        if (customerSize == 0) {
+            addArray();
+            saveChanges();
+        }
+    }
+
+    public ArrayList<CustomerModel> customerArray() {
+        customerArray = customerInit.getCustomers(customerInit.readFile(InitialiseCustomers.customersFile));
+        return customerArray;
+    }
+
+
 
     public void addArray() {
         customerArray.add(new CustomerModel("Jeff", 1111, "jeff@email.com", "07111111765", "1 Jeff Street, J12 0WL"));

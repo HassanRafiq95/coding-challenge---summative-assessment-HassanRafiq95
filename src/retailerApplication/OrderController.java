@@ -48,7 +48,7 @@ public class OrderController {
 
     public void addOrders() {
         stockControl.stockArray();
-        customerModel.initialiseArray();
+        customerModel.customerArray();
 
         ArrayList<Double> totalcost = new ArrayList();
 

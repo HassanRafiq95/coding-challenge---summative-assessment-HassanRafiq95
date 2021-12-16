@@ -8,11 +8,16 @@ public class LoginController {
     public static void main(String[] args) {
         StockController stock = new StockController();
         LoginController login = new LoginController();
+        CustomerModel customerModel = new CustomerModel("", 0, "","","");
+        customerModel.checkCustomers();
         login.checkUserArray();
         stock.checkStock();
         login.getData();
 
     }
+
+
+
 
 
     Scanner scn = new Scanner(System.in);
