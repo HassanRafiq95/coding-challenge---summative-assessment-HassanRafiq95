@@ -4,14 +4,6 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-//    public static void main(String[] args) {
-//        MainMenu mainMenu = new MainMenu();
-//        mainMenu.startup();
-//        mainMenu.mainMenu();
-//
-//    }
-
-
     // Creating Scanner object
     Scanner scn = new Scanner((System.in));
 
@@ -21,11 +13,9 @@ public class MainMenu {
     // Create instance of login controller
     LoginController logincontrol = new LoginController();
 
+    // Create instance of Order Controller
+    OrderController orderControl = new OrderController();
 
-    public void startup() {
-        stockControl.addItems();
-        stockControl.createFile();
-    }
 
 
     public void mainMenu() {
@@ -46,6 +36,7 @@ public class MainMenu {
         System.out.println("5 - Save Changes");
         System.out.println("6 - Exit the application");
         System.out.println("7 - Account Settings");
+        System.out.println("8 - Orders");
 
         // Get User Input
         int userInput = Integer.parseInt(scn.nextLine());
@@ -89,6 +80,12 @@ public class MainMenu {
                 logincontrol.AccountSettings();
                 break;
 
+            }
+
+            case 8:
+            {
+                orderControl.orderMenu();
+                break;
             }
 
 

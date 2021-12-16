@@ -38,12 +38,6 @@ public class LoginController {
         }
     }
 
-//    public void createUserFile() {
-//        initialUsers.createFileIfNotExist();
-//        initialUsers.writeData(userArray);
-//
-//    }
-
     public ArrayList<UserModel> getUserArray() {
         userArray = initialUsers.getUsers(initialUsers.readFile(InitialiseUsers.usersFile));
         return userArray;
@@ -91,7 +85,6 @@ public class LoginController {
 
     public void goToMenu() {
         MainMenu mainMenu = new MainMenu();
-        //mainMenu.startup();
         mainMenu.mainMenu();
     }
 

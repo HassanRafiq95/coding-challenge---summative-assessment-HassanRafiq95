@@ -1,7 +1,5 @@
 package retailerApplication;
 
-import java.util.ArrayList;
-
 public class StockModel {
 
     String title;
@@ -40,6 +38,8 @@ public class StockModel {
     public int getNumberInStock() {
         return numberInStock;
     }
+
+
 
 
 
